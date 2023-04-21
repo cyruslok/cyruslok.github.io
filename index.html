@@ -1,21 +1,99 @@
-<!DOCTYPE html>
-<html lang="en" >
+<html>
+<style>
+  table,
+  th,
+  td {
+    border: 1px solid black;
+  }
+
+  .indicator {
+    background: red;
+    background: var(--red-color, red);
+    height: 20px;
+    width: 20px;
+  }
+</style>
+
+<script>
+
+  let step1_IndicatorElementId = "step-1-indicator";
+  let step1_ValueFieldElementId = "step-1-value"
+  let step2_IndicatorElementId = "step-2-indicator";
+  let step2_ValueFieldElementId = "step-2-value"
+
+  function web_Trigger1() {
+    value = document.getElementById("test-value-input").value;
+
+    setIndicator(step1_IndicatorElementId, true)
+    setValueField(step1_ValueFieldElementId, value)
+
+    // Trigger App
+    window.app_trigger1(value) // Android Function
+    window.webkit.messageHandlers.app_trigger1.postMessage(value) // iOS Function
+  }
+
+  function web_Trigger2(value) {
+    setIndicator(step2_IndicatorElementId, true)
+    setValueField(step2_ValueFieldElementId, value)
+  }
+
+  function resetTest()
+  {
+    setIndicator(step1_IndicatorElementId, false)
+    setValueField(step1_ValueFieldElementId, "N/A")
+    setIndicator(step2_IndicatorElementId, false)
+    setValueField(step2_ValueFieldElementId, "N/A")
+  }
+
+  function setValueField(elementId, value)
+  {
+    document.getElementById(elementId).innerHTML = value;
+  }
+
+  function setIndicator(elementId, isEnable)
+  {
+    if(isEnable == true)
+    {
+      document.getElementById(elementId).style.backgroundColor = "green";
+    }
+    else
+    {
+      document.getElementById(elementId).style.backgroundColor = "red";
+    }
+  }
+
+</script>
+
 <head>
-  <meta charset="UTF-8">
-  <title>CodePen - Playground</title>
-  
 
 </head>
+
 <body>
-<!-- partial:index.partial.html -->
-<div id="text-view">
-  default
-</div>
-
-
-<button onclick="changeText('Hello World')">Change Text to Hello World</button>
-<!-- partial -->
-  <script  src="./script.js"></script>
-
+  <label>Test Value</label>
+  <input id="test-value-input" type="text" name="Test Value" />	<p>
+  <input type="button" onclick="web_Trigger1()" value="Start Test">
+  <input type="button" onclick="resetTest()" value="Reset Test"> <p>
+  <table>
+    <tr>
+      <th>Steps</th>
+      <th>Values</th>
+      <th>Indicator</th>
+    </tr>
+    <tr>
+      <td>Step 1: Web Trigger App</td>
+      <td id="step-1-value">N/A</td>
+      <td>
+        <div id="step-1-indicator" class="indicator"></div>
+      </td>
+    </tr>
+    <tr>
+      <td>Step 2: App Trigger Web</td>
+      <td id="step-2-value">N/A</td>
+      <td>
+        <div id="step-2-indicator" class="indicator"></div>
+      </td>
+    </tr>
+  </table>
 </body>
+
 </html>
