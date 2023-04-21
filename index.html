@@ -31,7 +31,7 @@
 
     // Trigger App
     AndroidInterface.app_trigger1(value) // Android Function
-    webkit.messageHandlers.app_trigger1.postMessage(value) // iOS Function
+    window.webkit.messageHandlers.jsHandler.postMessage(value) // iOS Function
   }
 
   function web_Trigger2(value) {
