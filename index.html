@@ -28,7 +28,7 @@
     setValueField(step1_ValueFieldElementId, value)
 
     // Trigger App
-    window.app_trigger1(value) // Android Function
+    AndroidInterface.app_trigger1(value) // Android Function
     window.webkit.messageHandlers.app_trigger1.postMessage(value) // iOS Function
   }
 
